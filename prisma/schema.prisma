@@ -20,12 +20,12 @@ model User {
   password  String
 }
 
-// Modelo de Produto
+
 model Product {
   id          Int      @id @default(autoincrement())
   name        String
   description String   @db.Text
-  imageUrl    String?
+  imageUrl    Bytes
   price       Decimal  @db.Decimal(10, 2)
   quantity    Int      @default(0)
 }
