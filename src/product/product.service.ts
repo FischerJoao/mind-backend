@@ -53,6 +53,16 @@ export class ProductService {
     });
   }
 
+  async findByName(name: string) {
+    return await this.prisma.product.findMany({
+      where: {
+        name: {
+          contains: name,
+        },
+      },
+    });
+  }
+
   async remove(id: number) {
     return await this.prisma.product.delete({ where: { id } });
   }
