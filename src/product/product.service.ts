@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UnauthorizedError } from 'src/auth/errors/unauthorized.error';
 
 @Injectable()
 export class ProductService {
@@ -27,18 +28,32 @@ export class ProductService {
     return await this.prisma.product.findMany();
   }
 
-  async findOne(id: number) {
+  async findById(id: number) {
     return await this.prisma.product.findUnique(
       {
         where: { id }
       });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    const product = await this.prisma.product.findUnique({
+      where: { id },
+    });
+
+    if (!product) {
+      throw new UnauthorizedError(
+        'Produto não encontrado.',
+      );
+    }
+    return await this.prisma.product.update({
+
+      where: { id },
+      data: updateProductDto,
+
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number) {
+    return await this.prisma.product.delete({ where: { id } });
   }
 }
