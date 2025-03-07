@@ -1,11 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller('app') //serve como rota principals
+@Controller() //serve como rota principals
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  @Get('teste')
+  @Get()
   getHello(): string {
     return this.appService.getHello();
   }
