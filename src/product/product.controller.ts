@@ -27,6 +27,10 @@ export class ProductController {
     return this.productService.findById(+id);
   }
 
+  @Get('ProductByName/:name')
+  findByName(@Param('name') name: string) {
+    return this.productService.findByName(name);
+  }
 
   @Patch('updateProduct/:id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {

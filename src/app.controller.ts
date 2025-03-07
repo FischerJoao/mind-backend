@@ -8,7 +8,7 @@ import { CurrentUser } from './auth/decorators/current-user.decorator';
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  @IsPublic()
+
   @Get()
   getHello(): string {
     return this.appService.getHello();
