@@ -7,10 +7,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LoginValidationMiddleware } from './middlewares/login-validation.middleware';
 
+
 @Module({
   imports: [UserModule, JwtModule.register({
     secret: process.env.JWT_SECRET,
-    signOptions: { expiresIn: process.env.JWT_EXPIRES_IN }
+    signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME }
   })],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy]
