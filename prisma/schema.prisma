@@ -25,7 +25,7 @@ model Product {
   id          Int      @id @default(autoincrement())
   name        String
   description String   @db.Text
-  imageUrl    String?
+  imageUrl     String?
   price       Decimal  @db.Decimal(10, 2)
   quantity    Int      @default(0)
 }
