@@ -14,25 +14,27 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
-  @IsPublic()
+
   @Get('AllProducts')
   findAll() {
     return this.productService.findAll();
   }
 
 
-  @IsPublic()
+
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+    return this.productService.findById(+id);
   }
 
-  @Patch(':id')
+
+  @Patch('updateProduct/:id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.update(+id, updateProductDto);
   }
 
-  @Delete(':id')
+
+  @Delete('deleteProduct/:id')
   remove(@Param('id') id: string) {
     return this.productService.remove(+id);
   }
