@@ -1,7 +1,5 @@
 // @ts-check
 import eslint from "@eslint/js";
-// Remova a importação do eslint-plugin-prettier
-// import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
@@ -11,8 +9,6 @@ export default tseslint.config(
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
-  // Remova a configuração do eslint-plugin-prettier
-  // eslintPluginPrettierRecommended,
   {
     languageOptions: {
       globals: {
@@ -32,7 +28,11 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
-      "@typescript-eslint/no-unsafe-call": "off"
+      "@typescript-eslint/no-unsafe-call": "off",
+      quotes: ["error", "single"],
+      indent: ["error", 2],
+      semi: ["error", "always"],
+      "import/no-extraneous-dependencies": ["error"]
     }
   }
 );
