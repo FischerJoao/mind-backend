@@ -24,7 +24,7 @@ export class ProductController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productService.findById(+id);
+    return this.productService.findById(id);
   }
 
   @Get('ProductByName/:name')
@@ -34,12 +34,12 @@ export class ProductController {
 
   @Patch('updateProduct/:id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+    return this.productService.update(id, updateProductDto);
   }
 
 
   @Delete('deleteProduct/:id')
   remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
+    return this.productService.remove(id);
   }
 }

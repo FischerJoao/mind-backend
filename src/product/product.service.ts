@@ -28,14 +28,14 @@ export class ProductService {
     return await this.prisma.product.findMany();
   }
 
-  async findById(id: number) {
+  async findById(id: string) {
     return await this.prisma.product.findUnique(
       {
         where: { id }
       });
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto) {
+  async update(id: string, updateProductDto: UpdateProductDto) {
     const product = await this.prisma.product.findUnique({
       where: { id },
     });
@@ -63,7 +63,7 @@ export class ProductService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return await this.prisma.product.delete({ where: { id } });
   }
 }
