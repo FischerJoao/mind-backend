@@ -7,6 +7,7 @@ import { JwtService } from "@nestjs/jwt";
 import { access } from "fs";
 import { UserToken } from "./models/UserToken";
 import { UnauthorizedError } from "./errors/unauthorized.error";
+import { IsPublic } from "./decorators/is-public.decorator";
 
 @Injectable()
 export class AuthService {
@@ -24,6 +25,7 @@ export class AuthService {
         const jwtToken = this.jwtService.sign(paylod);
 
         return {
+
             access_token: jwtToken,
         }
         //user vira jwt

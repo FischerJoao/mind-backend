@@ -7,9 +7,10 @@ async function bootstrap() {
 
   // Configurando o CORS para permitir requisições do frontend (localhost:3001)
   app.enableCors({
-    origin: 'http://localhost:3001', // URL do seu frontend
-    methods: 'GET,POST,PUT,DELETE', // Métodos permitidos
-    allowedHeaders: 'Content-Type, Authorization', // Cabeçalhos permitidos
+    origin: 'http://localhost:3001', // URL do seu frontend - CORRIGIDO
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Adicionado OPTIONS para preflight
+    allowedHeaders: 'Content-Type, Authorization, Origin, Accept', // Adicionado Origin e Accept
+    credentials: true, // Importante para autenticação
   });
 
   // Pipes para validação de entrada
