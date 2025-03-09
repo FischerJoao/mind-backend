@@ -96,3 +96,117 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+1. Rota: POST /user/newUser
+Descrição: Cria um novo usuário.
+Controller: UserController
+Método: POST
+Body:
+json
+
+
+{
+  "name": "string",
+  "email": "string",
+  "password": "string"
+}
+Resposta:
+201: Usuário criado com sucesso.
+
+2. Rota: POST /product/NewProduct
+Descrição: Cria um novo produto.
+Controller: ProductController
+Método: POST
+Body:
+json
+
+
+{
+  "name": "string",
+  "description": "string",
+  "price": "number"
+}
+Resposta:
+201: Produto criado com sucesso.
+
+3. Rota: PATCH /product/upload/:id
+Descrição: Faz o upload da imagem de um produto e salva o URL da imagem no banco.
+Controller: ProductController
+Método: PATCH
+Parâmetros:
+id: ID do produto (caminho)
+Body: (Upload de arquivo)
+File: Arquivo de imagem
+Resposta:
+200: Imagem enviada com sucesso e URL salva no banco.
+
+4. Rota: GET /product/AllProducts
+Descrição: Retorna todos os produtos.
+Controller: ProductController
+Método: GET
+Resposta:
+200: Lista de produtos.
+
+5. Rota: GET /product/:id
+Descrição: Retorna um produto específico pelo ID.
+Controller: ProductController
+Método: GET
+Parâmetros:
+id: ID do produto (caminho)
+Resposta:
+200: Produto encontrado.
+404: Produto não encontrado.
+
+6. Rota: GET /product/ProductByName/:name
+Descrição: Retorna um produto pelo nome.
+Controller: ProductController
+Método: GET
+Parâmetros:
+name: Nome do produto (caminho)
+Resposta:
+200: Produto encontrado pelo nome.
+404: Produto não encontrado.
+
+7. Rota: PATCH /product/updateProduct/:id
+Descrição: Atualiza os dados de um produto específico.
+Controller: ProductController
+Método: PATCH
+Parâmetros:
+id: ID do produto (caminho)
+Body:
+json
+
+{
+  "name": "string",
+  "description": "string",
+  "price": "number"
+}
+Resposta:
+200: Produto atualizado com sucesso.
+
+8. Rota: DELETE /product/deleteProduct/:id
+Descrição: Deleta um produto específico pelo ID.
+Controller: ProductController
+Método: DELETE
+Parâmetros:
+id: ID do produto (caminho)
+Resposta:
+200: Produto deletado com sucesso.
+404: Produto não encontrado.
+
+9. Rota: POST /auth/login
+Descrição: Realiza o login de um usuário.
+Controller: AuthController
+Método: POST
+Body:
+json
+Copy
+Edit
+{
+  "email": "string",
+  "password": "string"
+}
+Resposta:
+200: Retorna o token de autenticação.
+401: Credenciais inválidas.
