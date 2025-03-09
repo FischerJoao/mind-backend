@@ -25,8 +25,9 @@ export class AuthService {
         const jwtToken = this.jwtService.sign(paylod);
 
         return {
-
             access_token: jwtToken,
+            name: user.name,
+            email: user.email
         }
         //user vira jwt
     }
