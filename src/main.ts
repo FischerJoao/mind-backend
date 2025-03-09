@@ -1,19 +1,23 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { join } from 'path';
+import { existsSync, mkdirSync } from 'fs';
+
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Configurando o CORS para permitir requisições do frontend (localhost:3001)
+
   app.enableCors({
-    origin: 'http://localhost:3001', // URL do seu frontend - CORRIGIDO
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Adicionado OPTIONS para preflight
-    allowedHeaders: 'Content-Type, Authorization, Origin, Accept', // Adicionado Origin e Accept
-    credentials: true, // Importante para autenticação
+    origin: 'http://localhost:3001',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization, Origin, Accept',
+    credentials: true,
   });
 
-  // Pipes para validação de entrada
+
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -22,7 +26,12 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000); // Backend escutando na porta 3000
+  const uploadDir = join(process.cwd(), 'uploads');
+  if (!existsSync(uploadDir)) {
+    mkdirSync(uploadDir);
+  }
+
+  await app.listen(3000);
 }
 
 bootstrap();
