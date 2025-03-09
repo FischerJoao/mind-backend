@@ -1,8 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { FileInterceptor } from '@nestjs/platform-express/multer/interceptors/file.interceptor';
+
 
 @Controller('product')
 export class ProductController {
@@ -13,6 +17,45 @@ export class ProductController {
   create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }
+
+
+  @Post('upload/:id')
+  @UseInterceptors(FileInterceptor('image', {
+    storage: diskStorage({
+      destination: './uploads',
+      filename: (req, file, callback) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        const ext = extname(file.originalname);
+        callback(null, `${uniqueSuffix}${ext}`);
+      }
+    })
+  }))
+
+  async uploadFile(@UploadedFile() file: Express.Multer.File, @Param('id') id: string) {
+    const imageUrl = `/uploads/${file.filename}`;
+
+    const updatedProduct = await this.productService.updateProductImageById(id, imageUrl);
+
+    return {
+      message: 'Imagem enviada e URL salva no banco!',
+      product: updatedProduct,
+    };
+  }
+
+  @Patch('updateImage/:id')
+  @UseInterceptors(FileInterceptor('image'))
+  async updateProductImage(
+    @UploadedFile() file: Express.Multer.File,
+    @Param('id') id: string
+  ) {
+    const imageUrl = `/uploads/${file.filename}`; // Definir a URL da imagem
+    const updatedProduct = await this.productService.updateProductImageById(id, imageUrl); // Chama o Service
+    return {
+      message: 'Imagem do produto atualizada com sucesso!',
+      product: updatedProduct,
+    };
+  }
+
 
 
   @Get('AllProducts')

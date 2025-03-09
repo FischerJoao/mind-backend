@@ -3,6 +3,8 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UnauthorizedError } from 'src/auth/errors/unauthorized.error';
+import { unlinkSync } from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class ProductService {
@@ -66,4 +68,32 @@ export class ProductService {
   async remove(id: string) {
     return await this.prisma.product.delete({ where: { id } });
   }
+
+
+  async updateProductImageById(id: string, imageUrl: string) {
+    const product = await this.prisma.product.findUnique({ where: { id } });
+
+    if (!product) {
+      throw new Error('Produto não encontrado');
+    }
+
+    // Se o produto já tiver uma imagem, apaga o arquivo antigo
+    if (product.imageUrl) {
+      const oldImagePath = join(process.cwd(), 'uploads', product.imageUrl.split('/uploads/')[1]);
+
+      // Verifica se o arquivo antigo existe antes de deletar
+      try {
+        unlinkSync(oldImagePath); // Remove a imagem antiga
+      } catch (err) {
+        console.error('Erro ao remover a imagem antiga', err);
+      }
+    }
+
+    // Atualiza o produto com a nova URL da imagem
+    return this.prisma.product.update({
+      where: { id },
+      data: { imageUrl },
+    });
+  }
+
 }
