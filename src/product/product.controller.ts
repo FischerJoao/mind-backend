@@ -19,7 +19,7 @@ export class ProductController {
   }
 
 
-  @Post('upload/:id')
+  @Patch('upload/:id')
   @UseInterceptors(FileInterceptor('image', {
     storage: diskStorage({
       destination: './uploads',
@@ -30,10 +30,15 @@ export class ProductController {
       }
     })
   }))
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Param('id') id: string
+  ) {
+    if (!file) {
+      throw new Error('Nenhum arquivo enviado');
+    }
 
-  async uploadFile(@UploadedFile() file: Express.Multer.File, @Param('id') id: string) {
     const imageUrl = `/uploads/${file.filename}`;
-
     const updatedProduct = await this.productService.updateProductImageById(id, imageUrl);
 
     return {
@@ -42,19 +47,6 @@ export class ProductController {
     };
   }
 
-  @Patch('updateImage/:id')
-  @UseInterceptors(FileInterceptor('image'))
-  async updateProductImage(
-    @UploadedFile() file: Express.Multer.File,
-    @Param('id') id: string
-  ) {
-    const imageUrl = `/uploads/${file.filename}`; // Definir a URL da imagem
-    const updatedProduct = await this.productService.updateProductImageById(id, imageUrl); // Chama o Service
-    return {
-      message: 'Imagem do produto atualizada com sucesso!',
-      product: updatedProduct,
-    };
-  }
 
 
 
