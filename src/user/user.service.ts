@@ -22,28 +22,15 @@ export class UserService {
       data
     });
 
-    //pega o password e retorna undefined
     return {
       ...createdUser,
       password: undefined
     };
   }
 
-  // findAll() {
-  //   return `This action returns all user`;
-  // }
-
   findOneByEmail(email: string) {
     return this.prisma.user.findUnique({
       where: { email }
     });
   }
-
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} user`;
-  // }
 }

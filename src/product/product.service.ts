@@ -77,19 +77,17 @@ export class ProductService {
       throw new Error('Produto não encontrado');
     }
 
-    // Se o produto já tiver uma imagem, apaga o arquivo antigo
+
     if (product.imageUrl) {
       const oldImagePath = join(process.cwd(), 'uploads', product.imageUrl.split('/uploads/')[1]);
 
-      // Verifica se o arquivo antigo existe antes de deletar
+
       try {
-        unlinkSync(oldImagePath); // Remove a imagem antiga
+        unlinkSync(oldImagePath);
       } catch (err) {
         console.error('Erro ao remover a imagem antiga', err);
       }
     }
-
-    // Atualiza o produto com a nova URL da imagem
     return this.prisma.product.update({
       where: { id },
       data: { imageUrl },

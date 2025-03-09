@@ -11,10 +11,10 @@ export class CreateProductDto {
     @IsString()
     imageUrl?: string;
 
-    // Usar "number" para garantir que é interpretado como número
+
     @IsNumber()
     @Min(0)
-    price: number; // Garantir que "price" seja um número (não uma string)
+    price: number;
 
     @IsInt()
     @Min(0)

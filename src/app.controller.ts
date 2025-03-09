@@ -4,7 +4,7 @@ import { IsPublic } from './auth/decorators/is-public.decorator';
 import { User } from '@prisma/client';
 import { CurrentUser } from './auth/decorators/current-user.decorator';
 
-@Controller() //serve como rota principals
+@Controller()
 export class AppController {
   constructor(private readonly appService: AppService) { }
 

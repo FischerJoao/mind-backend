@@ -4,10 +4,9 @@ import * as bcrypt from "bcrypt";
 import { User } from "src/user/entities/user.entity";
 import { UserPayload } from "./models/UserPayload";
 import { JwtService } from "@nestjs/jwt";
-import { access } from "fs";
 import { UserToken } from "./models/UserToken";
 import { UnauthorizedError } from "./errors/unauthorized.error";
-import { IsPublic } from "./decorators/is-public.decorator";
+
 
 @Injectable()
 export class AuthService {
@@ -29,14 +28,14 @@ export class AuthService {
             name: user.name,
             email: user.email
         }
-        //user vira jwt
+
     }
 
     async validateUser(email: string, password: string) {
         const user = await this.userService.findOneByEmail(email);
 
         if (user) {
-            //comparar senha
+
 
             const isPasswordValid = await bcrypt.compare(password, user.password);
 
@@ -48,7 +47,7 @@ export class AuthService {
             }
         }
 
-        //nao encontrou nada
+
         throw new UnauthorizedError(
             'Email ou senha Incorretos.',
         );
